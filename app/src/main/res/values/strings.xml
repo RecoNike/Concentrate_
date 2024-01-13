@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Concentrate!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="intro_fragment_2_text">Choose for yourself the optimal period\n of continuous concentrated work</string>
+    <string name="intro_fragment_2_recomendation">The study found the ideal ratio: 50 minutes of work followed by 20 minutes of rest. Workers following this regimen demonstrated amazing concentration on the tasks at hand. For almost an entire hour, they were 100% engaged in the work they needed to do.</string>
+    <string name="intro_fragment_1_text">Hello!\n
+Welcome to the Concentrate app.\n
+With our help, you will be able to work effectively at the time you choose without being distracted by factors on your smartphone.\n
+Every time you work hard you (Interactive), in case you are distracted (Interactive off). We wish you good luck and let\'s quickly customize the application for you!</string>
 </resources>
