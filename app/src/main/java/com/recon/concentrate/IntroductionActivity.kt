@@ -1,5 +1,6 @@
 package com.recon.concentrate
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -29,5 +30,11 @@ class IntroductionActivity : FragmentActivity() {
                 }
             }
         })
+
+        startButton.setOnClickListener {
+            val i = Intent(this, MainActivity::class.java)
+            finish()
+            startActivity(i)
+        }
     }
 }
