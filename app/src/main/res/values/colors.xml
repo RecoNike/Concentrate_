@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_gradientStart">#344C11</color>
-    <color name="bg_gradientCenter">#778D45</color>
-    <color name="bg_gradientEnd">#AEC670</color>
+    <color name="bg_gradientStart">#2F70AF</color>
+    <color name="bg_gradientCenter">#00457E</color>
+    <color name="bg_gradientEnd">#02315E</color>
     <color name = "textColor">#FF000000</color>
     <color name="lightTextColor">#80000000</color>
 
