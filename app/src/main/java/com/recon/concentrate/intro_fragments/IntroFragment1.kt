@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.TextView
 import com.recon.concentrate.R
 
 class IntroFragment1 : Fragment() {
@@ -25,11 +26,13 @@ class IntroFragment1 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val seekBar: SeekBar = view.findViewById(R.id.seekBar)
+        val timeTV: TextView = view.findViewById(R.id.minutesTV)
         // Слушатель изменений в SeekBar
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Сохранение значения в SharedPreferences при изменении
                 sharedPreferencesManager.writeString("workTime", progress.toString())
+                timeTV.text = "${(progress + 1) * 5} minutes"
                 Log.d("", "Progress : ${sharedPreferencesManager.readString("workTime","")}")
             }
 
