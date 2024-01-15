@@ -17,4 +17,9 @@ class SharedPreferencesManager(context: Context) {
     fun readString(key: String, defaultValue: String): String {
         return sharedPreferences.getString(key, defaultValue) ?: defaultValue
     }
+
+    fun containsKey(key: String): Boolean {
+        return sharedPreferences.contains(key)
+    }
+
 }
