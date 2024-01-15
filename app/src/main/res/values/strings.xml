@@ -7,4 +7,15 @@
 Welcome to the Concentrate app.\n
 With our help, you will be able to work effectively at the time you choose without being distracted by factors on your smartphone.\n
 Every time you work hard you (Interactive), in case you are distracted (Interactive off). We wish you good luck and let\'s quickly customize the application for you!</string>
+    <string name="main_act_text">Press on the circle to start</string>
+    <string name="intro_fragment_3_text">Successful session = New robot:\n
+After successfully completing each concentration session, you will be rewarded with a new unique robot for your collection. Each one represents your diligent work and achievements.
+\n\n
+
+Do not leave the app:\n
+It\'s important to remember that new robots are created only upon successful completion of a session within the app. If you exit the app midway, your progress will not be saved, and a new robot will not appear.
+\n\n
+
+Set goals for yourself:\n
+Establish clear and achievable goals for each session. This will help you focus better and derive more satisfaction from the new robots in your collection.</string>
 </resources>
