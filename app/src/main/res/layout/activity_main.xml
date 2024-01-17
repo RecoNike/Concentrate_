@@ -25,6 +25,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginBottom="268dp"
+        android:elevation="10dp"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress="10"
@@ -65,5 +66,29 @@
         app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/circularProgressBar" />
+
+    <ImageView
+        android:id="@+id/settingsButtonImg"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/settings_button_background"
+        android:elevation="10dp"
+        android:src="@drawable/settings_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Settings"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/settingsButtonImg"
+        app:layout_constraintStart_toStartOf="@+id/settingsButtonImg"
+        app:layout_constraintTop_toBottomOf="@+id/settingsButtonImg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

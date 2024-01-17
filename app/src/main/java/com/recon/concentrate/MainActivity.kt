@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private val sharedPreferencesManager: SharedPreferencesManager by lazy {
         SharedPreferencesManager(this)
     }
+    lateinit var settingsbtn: ImageView
     private lateinit var timerTextView: TextView
     private lateinit var countDownTimer: CountDownTimer
     lateinit var circularProgressBar: CircularProgressBar
@@ -32,18 +34,26 @@ class MainActivity : AppCompatActivity() {
             return
         }
         timerTextView = findViewById(R.id.timeTV)
+        circularProgressBar = findViewById(R.id.circularProgressBar)
+        settingsbtn = findViewById(R.id.settingsButtonImg)
+
         // Загружаем сохраненное значение времени из SharedPreferences
         savedDuration = sharedPreferencesManager.readString("workTime", "10").toFloat() + 1
         timerTextView.text = "${(savedDuration * 5).toInt()} : 00"
+
         // Рассчитываем начальный процент прогресса и устанавливаем его в CircularProgressBar
         val startInMin = savedDuration * 5
         val startPercent = (60 / startInMin) * 100
 
-        circularProgressBar = findViewById(R.id.circularProgressBar)
 
         circularProgressBar.apply {
             setProgressWithAnimation(startPercent, 2000)
         }
+
+        settingsbtn.setOnClickListener{
+            StartSettings()
+        }
+
 
         // Устанавливаем слушатель клика для запуска обратного отсчета
         circularProgressBar.setOnClickListener {
@@ -52,6 +62,13 @@ class MainActivity : AppCompatActivity() {
                 startCountdown()
             }
         }
+    }
+
+    private fun StartSettings() {
+        val i: Intent = Intent(this, SettingsActivity::class.java)
+        startActivity(i)
+        finish()
+        return
     }
 
     private fun startCountdown() {
