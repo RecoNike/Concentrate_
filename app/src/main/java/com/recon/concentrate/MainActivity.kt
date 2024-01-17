@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         timerTextView = findViewById(R.id.timeTV)
         circularProgressBar = findViewById(R.id.circularProgressBar)
         settingsbtn = findViewById(R.id.settingsButtonImg)
+        val scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.ring_anim_in_start)
+
 
         // Загружаем сохраненное значение времени из SharedPreferences
         savedDuration = sharedPreferencesManager.readString("workTime", "10").toFloat() + 1
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         // Рассчитываем начальный процент прогресса и устанавливаем его в CircularProgressBar
         val startInMin = savedDuration * 5
-        val startPercent = (60 / startInMin) * 100
+        val startPercent = (startInMin / 60) * 100
 
 
         circularProgressBar.apply {
@@ -59,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         circularProgressBar.setOnClickListener {
             if (!countdownStarted) {
                 countdownStarted = true
+                circularProgressBar.startAnimation(scaleAnimation)
                 startCountdown()
             }
         }
