@@ -9,12 +9,18 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import java.util.Arrays
 
 class MainActivity : AppCompatActivity() {
     private val sharedPreferencesManager: SharedPreferencesManager by lazy {
         SharedPreferencesManager(this)
     }
+    lateinit var mAdView : AdView
     lateinit var settingsbtn: ImageView
     private lateinit var timerTextView: TextView
     private lateinit var countDownTimer: CountDownTimer
@@ -26,7 +32,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MobileAds.initialize(this) {}
 
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        val testDeviceIds = Arrays.asList("21C51C9FBD19B5F7DAED36827F5120F9")
+        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+        MobileAds.setRequestConfiguration(configuration)
+        mAdView.loadAd(adRequest)
 
         if (!sharedPreferencesManager.containsKey("workTime")) {
             val i: Intent = Intent(this, IntroductionActivity::class.java)
