@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -39,9 +40,15 @@ dependencies {
 
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.mikhaellopez:circularprogressbar:3.1.0")
-    implementation ("com.google.android.gms:play-services-ads:22.6.0")
-    implementation ("com.google.firebase:firebase-core:21.1.1")
-    implementation ("com.google.firebase:firebase-ads:22.6.0")
+//    implementation ("com.google.android.gms:play-services-ads:22.6.0")
+//    implementation ("com.google.firebase:firebase-core:21.1.1")
+//    implementation ("com.google.firebase:firebase-ads:22.6.0")
+
+    //room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
