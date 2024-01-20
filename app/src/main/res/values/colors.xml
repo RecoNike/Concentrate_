@@ -3,8 +3,8 @@
     <color name="bg_gradientStart">#2F70AF</color>
     <color name="bg_gradientCenter">#00457E</color>
     <color name="bg_gradientEnd">#02315E</color>
-    <color name = "textColor">#FF000000</color>
-    <color name="lightTextColor">#80000000</color>
+    <color name = "textColor">#B8EAD4</color>
+    <color name="lightTextColor">#80B8EAD4</color>
 
 
     <color name="black">#FF000000</color>

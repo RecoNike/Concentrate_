@@ -2,11 +2,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="10dp"/>
     <gradient
-        android:startColor="@color/white"
-        android:centerColor="#E0E0E0"
-        android:endColor="@color/white"
+        android:startColor="@color/bg_gradientEnd"
+        android:endColor="@color/bg_gradientCenter"
         android:gradientRadius="300dp"
         android:angle="90"
         android:type="linear"/>
+    <stroke
+        android:color="@color/textColor"
+        android:width="2dp"/>
 
 </shape>
