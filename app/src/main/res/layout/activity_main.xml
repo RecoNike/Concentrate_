@@ -12,19 +12,19 @@
         android:id="@+id/imageView2"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
         app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
         app:layout_constraintTop_toTopOf="@+id/circularProgressBar"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/platform" />
+        app:srcCompat="@drawable/block_default" />
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/circularProgressBar"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginBottom="268dp"
         android:elevation="10dp"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
@@ -36,21 +36,20 @@
         app:cpb_round_border="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/hintTextTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/nunito_semibold"
         android:text="@string/main_act_text"
         android:textColor="@color/textColor"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/circularProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -70,13 +69,12 @@
     <ImageView
         android:id="@+id/settingsButtonImg"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/settings_button_background"
         android:elevation="10dp"
         android:src="@drawable/settings_img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,21 +84,46 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_semibold"
         android:text="Settings"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="@+id/settingsButtonImg"
         app:layout_constraintStart_toStartOf="@+id/settingsButtonImg"
         app:layout_constraintTop_toBottomOf="@+id/settingsButtonImg" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+    <ImageView
+        android:id="@+id/collectionBtnIV"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/settings_button_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/star_image" />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Collection"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="@+id/collectionBtnIV"
+        app:layout_constraintStart_toStartOf="@+id/collectionBtnIV"
+        app:layout_constraintTop_toBottomOf="@+id/collectionBtnIV" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Concentration on work -\n is the key to success!"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circularProgressBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
