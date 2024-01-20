@@ -57,4 +57,11 @@ class SettingsActivity : AppCompatActivity() {
             optionTimeTV.text = ((seekBar.progress + 1) * 5).toString() + " minutes"
         }
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val i: Intent = Intent(this, MainActivity::class.java)
+        startActivity(i)
+        finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
+        return
+    }
 }

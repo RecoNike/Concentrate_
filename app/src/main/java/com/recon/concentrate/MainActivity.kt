@@ -4,42 +4,42 @@ import SharedPreferencesManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
-import java.util.Arrays
+import com.recon.concentrate.DB.AppDatabase
+import com.recon.concentrate.DB.CubeDao
+
 
 class MainActivity : AppCompatActivity() {
     private val sharedPreferencesManager: SharedPreferencesManager by lazy {
         SharedPreferencesManager(this)
     }
-    lateinit var mAdView : AdView
+    lateinit var cubeDao: CubeDao
     lateinit var settingsbtn: ImageView
-    private lateinit var timerTextView: TextView
-    private lateinit var countDownTimer: CountDownTimer
+    lateinit var timerTextView: TextView
+    lateinit var countDownTimer: CountDownTimer
     lateinit var circularProgressBar: CircularProgressBar
+    lateinit var hintTV: TextView
+    lateinit var collectionBtn: ImageView
+    var startPercent: Float = 0.0f
     var countdownStarted = false
     var savedDuration = 0f
+    var endPercent = 0f
+    var minsToEnd: Float = 0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        MobileAds.initialize(this) {}
+        val database = AppDatabase.getInstance(applicationContext)
+        cubeDao = database.cubeDao()
 
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        val testDeviceIds = Arrays.asList("21C51C9FBD19B5F7DAED36827F5120F9")
-        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
-        MobileAds.setRequestConfiguration(configuration)
-        mAdView.loadAd(adRequest)
+        hintTV = findViewById(R.id.hintTextTV)
+        collectionBtn = findViewById(R.id.collectionBtnIV)
 
         if (!sharedPreferencesManager.containsKey("workTime")) {
             val i: Intent = Intent(this, IntroductionActivity::class.java)
@@ -59,14 +59,15 @@ class MainActivity : AppCompatActivity() {
 
         // Рассчитываем начальный процент прогресса и устанавливаем его в CircularProgressBar
         val startInMin = savedDuration * 5
-        val startPercent = (startInMin / 60) * 100
+        startPercent = (startInMin / 60) * 100
 
 
-        circularProgressBar.apply {
-            setProgressWithAnimation(startPercent, 2000)
+        initProgressBar()
+
+        collectionBtn.setOnClickListener {
+            StartCollection()
         }
-
-        settingsbtn.setOnClickListener{
+        settingsbtn.setOnClickListener {
             StartSettings()
         }
 
@@ -76,7 +77,20 @@ class MainActivity : AppCompatActivity() {
             if (!countdownStarted) {
                 countdownStarted = true
                 circularProgressBar.startAnimation(scaleAnimation)
+                hintTV.visibility = View.GONE
                 startCountdown()
+//                val layoutParams = window.attributes
+//                layoutParams.screenBrightness = 0.01f // Пример: 10% яркости
+//                window.attributes = layoutParams
+
+            }
+        }
+    }
+
+    private fun initProgressBar() {
+        runOnUiThread {
+            circularProgressBar.apply {
+                setProgressWithAnimation(startPercent, 2000)
             }
         }
     }
@@ -88,18 +102,26 @@ class MainActivity : AppCompatActivity() {
         return
     }
 
+    private fun StartCollection() {
+        val i: Intent = Intent(this, CollectionActivity::class.java)
+        startActivity(i)
+        finish()
+        return
+    }
+
     private fun startCountdown() {
         // Создаём CountDownTimer с учетом сохраненной длительности
         countDownTimer = object : CountDownTimer(savedDuration.toLong() * 5 * 60 * 1000, 1000) {
-            var endPercent = 0f
-            var minsToEnd: Float = 0f
+
 
             override fun onTick(millisUntilFinished: Long) {
                 // Рассчитываем процент прогресса и обновляем CircularProgressBar
                 minsToEnd = (millisUntilFinished.toFloat() / 60000)
                 endPercent = (minsToEnd / 60) * 100
-                circularProgressBar.apply {
-                    setProgressWithAnimation(endPercent, 1000)
+                runOnUiThread {
+                    circularProgressBar.apply {
+                        setProgressWithAnimation(endPercent, 1000)
+                    }
                 }
 
                 runOnUiThread {
@@ -114,6 +136,8 @@ class MainActivity : AppCompatActivity() {
             override fun onFinish() {
                 // Завершение обратного отсчета
                 countdownStarted = false
+                hintTV.visibility = View.VISIBLE
+                initProgressBar()
             }
         }
         countDownTimer.start() // Запускаем таймер
