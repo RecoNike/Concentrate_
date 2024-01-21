@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.Switch
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
@@ -15,6 +16,7 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var backBt: ImageView
     lateinit var seekBar: SeekBar
     lateinit var optionTimeTV: TextView
+    lateinit var brightSwitch:Switch
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -22,6 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         optionTimeTV = findViewById(R.id.timeValueText)
         seekBar = findViewById(R.id.seekBar)
         backBt = findViewById(R.id.backButton)
+     //   brightSwitch = findViewById(R.id.brightSwitch)
 
         CheckShared()
 

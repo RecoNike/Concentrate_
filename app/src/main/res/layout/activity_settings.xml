@@ -88,7 +88,33 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Change\nBrightness"
+                android:textAlignment="center"
+                android:textColor="@color/textColor" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight=".15"
+                android:background="@drawable/toggle_selector"
+                android:checked="true"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="ToggleButton"
+                android:textOff="Disable"
+                android:textOn="Enable"
+                app:layout_constraintEnd_toEndOf="parent" />
+
         </LinearLayout>
+
     </LinearLayout>
 
     <TextView
