@@ -1,5 +1,6 @@
 package com.recon.concentrate
 
+import SharedPreferencesManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.recon.concentrate.intro_fragments.IntroViewPagerAdapter
 
 class IntroductionActivity : FragmentActivity() {
+    private val sharedPreferencesManager by lazy { SharedPreferencesManager(this) }
     lateinit var viewPager: ViewPager2
     lateinit var startButton : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class IntroductionActivity : FragmentActivity() {
         })
 
         startButton.setOnClickListener {
+            sharedPreferencesManager.writeString("changeBright", "true")
             val i = Intent(this, MainActivity::class.java)
             finish()
             startActivity(i)
