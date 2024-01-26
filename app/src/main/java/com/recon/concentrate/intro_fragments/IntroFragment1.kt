@@ -27,6 +27,7 @@ class IntroFragment1 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val seekBar: SeekBar = view.findViewById(R.id.seekBar)
         val timeTV: TextView = view.findViewById(R.id.minutesTV)
+        sharedPreferencesManager.writeString("workTime", "9")
         // Слушатель изменений в SeekBar
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
