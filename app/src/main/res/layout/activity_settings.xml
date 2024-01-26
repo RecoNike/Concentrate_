@@ -99,7 +99,7 @@
                 android:textColor="@color/textColor" />
 
             <ToggleButton
-                android:id="@+id/toggleButton"
+                android:id="@+id/brightnessBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
