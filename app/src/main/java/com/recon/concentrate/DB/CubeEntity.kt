@@ -4,8 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// CubeEntity.kt
-
 @Entity(tableName = "cubes")
 data class CubeEntity(
     @PrimaryKey(autoGenerate = true)
@@ -15,5 +13,11 @@ data class CubeEntity(
     val name: String,
 
     @ColumnInfo(name = "is_open")
-    var isOpen: Boolean = false
+    var isOpen: Boolean = false,
+//
+//    @ColumnInfo(name = "rarity")
+//    var rarity: Int,
+//
+//    @ColumnInfo(name = "date_when_opened")
+//    var openDate: String
 )

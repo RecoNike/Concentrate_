@@ -17,4 +17,5 @@ interface CubeDao {
 
     @Update
     suspend fun updateCube(cube: CubeEntity)
+
 }
