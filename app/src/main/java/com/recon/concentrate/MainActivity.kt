@@ -7,11 +7,13 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +24,7 @@ import com.recon.concentrate.DB.AppDatabase
 import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.utils.DialogHelper
 import com.recon.concentrate.utils.TimerNotificationManager
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var circularProgressBar: CircularProgressBar
     lateinit var hintTV: TextView
     lateinit var collectionBtn: ImageView
+    lateinit var openShopBtn: ImageView
     var ScreenLocked: Boolean = false
     var startPercent: Float = 0.0f
     var countdownStarted = false
@@ -46,11 +50,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var timerNotificationManager: TimerNotificationManager
     lateinit var dialogHelper: DialogHelper
     var forceStopped = false
-
+    lateinit var inspireTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -60,6 +65,8 @@ class MainActivity : AppCompatActivity() {
         cubeDao = database.cubeDao()
         hintTV = findViewById(R.id.hintTextTV)
         collectionBtn = findViewById(R.id.collectionBtnIV)
+        inspireTV = findViewById(R.id.inspireTV)
+        openShopBtn = findViewById(R.id.openShopBtnIV)
         checkSavedOptions()
 
         if (!notificationManager.areNotificationsEnabled()) {
@@ -102,6 +109,9 @@ class MainActivity : AppCompatActivity() {
         settingsbtn.setOnClickListener {
             StartSettings()
         }
+        openShopBtn.setOnClickListener{
+            StartShop()
+        }
 
 
         // Устанавливаем слушатель клика для запуска обратного отсчета
@@ -109,6 +119,7 @@ class MainActivity : AppCompatActivity() {
             if (!countdownStarted) {
                 settingsbtn.alpha = 0.5f
                 collectionBtn.alpha = 0.5f
+                openShopBtn.alpha = 0.5f
                 countdownStarted = true
                 circularProgressBar.startAnimation(scaleAnimation)
                 hintTV.visibility = View.GONE
@@ -194,14 +205,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun StartShop() {
+        if (!countdownStarted) {
+            val i: Intent = Intent(this, ShopActivity::class.java)
+            startActivity(i)
+            finish()
+            return
+        } else {
+            Snackbar.make(
+                circularProgressBar,
+                "Closed till countdown is working",
+                Snackbar.LENGTH_SHORT
+            )/*.setAnchorView(optionTimeTV)*/
+                .show()
+        }
+    }
+
     private fun startCountdown() {
+        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+
         // Создаём CountDownTimer с учетом сохраненной длительности
         //debug TODO DELETE AFTER  (savedDuration).toLong() * 5 * 60 * 1000
         countDownTimer = object : CountDownTimer((savedDuration).toLong() * 5 * 60 * 1000, 1000) {
+        var savedMilisForAnim: Long = (savedDuration).toLong() * 5 * 60 * 1000
 
             override fun onTick(millisUntilFinished: Long) {
                 // Рассчитываем процент прогресса и обновляем CircularProgressBar
-
 
                 minsToEnd = (millisUntilFinished.toFloat() / 60000)
                 endPercent = (minsToEnd / 60) * 100
@@ -223,6 +253,15 @@ class MainActivity : AppCompatActivity() {
                             seconds
                         )
                     )
+
+
+                    if(savedMilisForAnim - millisUntilFinished >= 5000){
+                        savedMilisForAnim = millisUntilFinished
+                        inspireTV.startAnimation(fadeOutAnimation)
+                        inspireTV.text = getRandomText()
+                        inspireTV.startAnimation(fadeInAnimation)
+                    }
+
                 }
                 val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
                 if (keyguardManager.isKeyguardLocked) {
@@ -241,42 +280,7 @@ class MainActivity : AppCompatActivity() {
                 initProgressBar()
                 settingsbtn.alpha = 1.0f
                 collectionBtn.alpha = 1.0f
-                if (!forceStopped) {
-                    val rnds = (0..1000).random()
-
-                    if (rnds > 0 && rnds <= 1000 * chances[0]) {
-                        Snackbar.make(
-                            circularProgressBar,
-                            "Common",
-                            Snackbar.LENGTH_SHORT
-                        )/*.setAnchorView(optionTimeTV)*/
-                            .show()
-                    }
-                    if (rnds > 1000 * chances[0] && rnds <= 1000 * chances[1]) {
-                        Snackbar.make(
-                            circularProgressBar,
-                            "rare",
-                            Snackbar.LENGTH_SHORT
-                        )/*.setAnchorView(optionTimeTV)*/
-                            .show()
-                    }
-                    if (rnds > 1000 * chances[1] && rnds <= 1000 * chances[2]) {
-                        Snackbar.make(
-                            circularProgressBar,
-                            "epic",
-                            Snackbar.LENGTH_SHORT
-                        )/*.setAnchorView(optionTimeTV)*/
-                            .show()
-                    }
-                    if (rnds > 1000 * chances[2] && rnds <= 1000 * chances[3]) {
-                        Snackbar.make(
-                            circularProgressBar,
-                            "legendary",
-                            Snackbar.LENGTH_SHORT
-                        )/*.setAnchorView(optionTimeTV)*/
-                            .show()
-                    }
-                }
+                openShopBtn.alpha = 1.0f
                 timerNotificationManager.cancelTimerNotification()
                 forceStopped = false
             }
@@ -294,6 +298,17 @@ class MainActivity : AppCompatActivity() {
                 requestNotificationPermission()
             }
         )
+    }
+
+
+    private fun getRandomText(): String {
+        val texts = listOf(
+            "Concentration on work -\n is the key to success!",
+            "Remember your goal",
+            "Stay productive",
+            "Be better",
+            "Turn off your screen!")
+        return texts[Random.nextInt(texts.size)]
     }
 
 

@@ -93,10 +93,10 @@
         android:id="@+id/collectionBtnIV"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/settings_button_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/settingsButtonImg"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/star_image" />
 
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/collectionBtnIV" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/inspireTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -125,5 +125,38 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circularProgressBar" />
+
+    <TextView
+        android:id="@+id/coinsCountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="0"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/openShopBtnIV"
+        app:layout_constraintEnd_toStartOf="@+id/openShopBtnIV" />
+
+    <ImageView
+        android:id="@+id/openShopBtnIV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/settings_button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/collectionBtnIV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/collectionBtnIV"
+        app:srcCompat="@drawable/add_icon" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/coinsCountTV"
+        app:layout_constraintTop_toTopOf="@+id/coinsCountTV"
+        app:srcCompat="@drawable/blockcoin_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
