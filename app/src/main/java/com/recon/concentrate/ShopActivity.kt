@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
 class ShopActivity : AppCompatActivity() {
@@ -16,16 +17,18 @@ class ShopActivity : AppCompatActivity() {
 
     lateinit var backBt: ImageView
     lateinit var chestBtn: LinearLayout
+    lateinit var coinsCountTV: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
         backBt = findViewById(R.id.backBtnIV)
         chestBtn = findViewById(R.id.chestLayout)
-
+        coinsCountTV = findViewById(R.id.coinsCountTV)
+        InitMoney()
 
         chestBtn.setOnClickListener{
-            if(sharedPreferencesManager.readString("coins","").toInt() <= 10){
+            if(sharedPreferencesManager.readString("coins","").toInt() >= 10){
                 OpenChest()
             } else {
                 Snackbar.make(
@@ -44,8 +47,19 @@ class ShopActivity : AppCompatActivity() {
 
     }
 
+    private fun InitMoney() {
+        coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
+    }
+
     private fun OpenChest() {
-        TODO("Not yet implemented")
+        Snackbar.make(
+            chestBtn,
+            "Chest Opened",
+            Snackbar.LENGTH_SHORT
+        ).show()
+        val buffer = sharedPreferencesManager.readString("coins", "")
+        sharedPreferencesManager.writeString("coins", (buffer.toInt() - 10).toString())
+        InitMoney()
     }
 
 
