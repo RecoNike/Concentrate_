@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     var savedDuration = 0f
     var endPercent = 0f
     var minsToEnd: Float = 0f
-    var chances = listOf(0.6, 0.8, 0.95, 1.0) //common, rare, epic, legendary
     lateinit var timerNotificationManager: TimerNotificationManager
     lateinit var dialogHelper: DialogHelper
     var forceStopped = false
@@ -113,10 +112,10 @@ class MainActivity : AppCompatActivity() {
         settingsbtn.setOnClickListener {
             StartSettings()
         }
-        shopMainBtn.setOnClickListener{
+        shopMainBtn.setOnClickListener {
             StartShop()
         }
-        openShopBtn.setOnClickListener{
+        openShopBtn.setOnClickListener {
             StartShop()
         }
 
@@ -127,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 settingsbtn.alpha = 0.5f
                 collectionBtn.alpha = 0.5f
                 openShopBtn.alpha = 0.5f
+                shopMainBtn.alpha = 0.5f
                 countdownStarted = true
                 circularProgressBar.startAnimation(scaleAnimation)
                 hintTV.visibility = View.GONE
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         } else {
             savedDuration = sharedPreferencesManager.readString("workTime", "10").toFloat() + 1
-            coinsCountTV.text = sharedPreferencesManager.readString("coins","")
+            coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
         }
     }
 
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
         // Создаём CountDownTimer с учетом сохраненной длительности
         //debug TODO DELETE AFTER  (savedDuration).toLong() * 5 * 60 * 1000
         countDownTimer = object : CountDownTimer((savedDuration).toLong() * 5 * 60 * 1000, 1000) {
-        var savedMilisForAnim: Long = (savedDuration).toLong() * 5 * 60 * 1000
+            var savedMilisForAnim: Long = (savedDuration).toLong() * 5 * 60 * 1000
 
             override fun onTick(millisUntilFinished: Long) {
                 // Рассчитываем процент прогресса и обновляем CircularProgressBar
@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
                     )
 
 
-                    if(savedMilisForAnim - millisUntilFinished >= 5000){
+                    if (savedMilisForAnim - millisUntilFinished >= 5000) {
                         savedMilisForAnim = millisUntilFinished
                         inspireTV.startAnimation(fadeOutAnimation)
                         inspireTV.text = getRandomText()
@@ -289,9 +289,15 @@ class MainActivity : AppCompatActivity() {
                 settingsbtn.alpha = 1.0f
                 collectionBtn.alpha = 1.0f
                 openShopBtn.alpha = 1.0f
+                shopMainBtn.alpha = 1.0f
                 timerNotificationManager.cancelTimerNotification()
-                val coins: Int = savedDuration.toInt() + sharedPreferencesManager.readString("coins", "").toInt()
-                sharedPreferencesManager.writeString("coins", coins.toString())
+                if (!forceStopped) {
+                    Log.d("","Not forceStopped, adding 10 coins")
+                    val coins: Int =
+                        savedDuration.toInt() + sharedPreferencesManager.readString("coins", "5")
+                            .toInt()
+                    sharedPreferencesManager.writeString("coins", coins.toString())
+                }
                 coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
                 forceStopped = false
             }
@@ -318,7 +324,8 @@ class MainActivity : AppCompatActivity() {
             "Remember your goal",
             "Stay productive",
             "Be better",
-            "Turn off your screen!")
+            "Turn off your screen!"
+        )
         return texts[Random.nextInt(texts.size)]
     }
 
