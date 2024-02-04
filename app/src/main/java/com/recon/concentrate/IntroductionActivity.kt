@@ -35,6 +35,7 @@ class IntroductionActivity : FragmentActivity() {
 
         startButton.setOnClickListener {
             sharedPreferencesManager.writeString("changeBright", "true")
+            sharedPreferencesManager.writeString("coins", "5")
             val i = Intent(this, MainActivity::class.java)
             finish()
             startActivity(i)
