@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var hintTV: TextView
     lateinit var collectionBtn: ImageView
     lateinit var openShopBtn: ImageView
+    lateinit var shopMainBtn: ImageView
+    lateinit var coinsCountTV: TextView
     var ScreenLocked: Boolean = false
     var startPercent: Float = 0.0f
     var countdownStarted = false
@@ -67,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         collectionBtn = findViewById(R.id.collectionBtnIV)
         inspireTV = findViewById(R.id.inspireTV)
         openShopBtn = findViewById(R.id.openShopBtnIV)
+        shopMainBtn = findViewById(R.id.shopBtnIV)
+        coinsCountTV = findViewById(R.id.coinsCountTV)
         checkSavedOptions()
 
         if (!notificationManager.areNotificationsEnabled()) {
@@ -108,6 +112,9 @@ class MainActivity : AppCompatActivity() {
         }
         settingsbtn.setOnClickListener {
             StartSettings()
+        }
+        shopMainBtn.setOnClickListener{
+            StartShop()
         }
         openShopBtn.setOnClickListener{
             StartShop()
@@ -161,6 +168,7 @@ class MainActivity : AppCompatActivity() {
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         } else {
             savedDuration = sharedPreferencesManager.readString("workTime", "10").toFloat() + 1
+            coinsCountTV.text = sharedPreferencesManager.readString("coins","")
         }
     }
 
@@ -282,6 +290,9 @@ class MainActivity : AppCompatActivity() {
                 collectionBtn.alpha = 1.0f
                 openShopBtn.alpha = 1.0f
                 timerNotificationManager.cancelTimerNotification()
+                val coins: Int = savedDuration.toInt() + sharedPreferencesManager.readString("coins", "").toInt()
+                sharedPreferencesManager.writeString("coins", coins.toString())
+                coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
                 forceStopped = false
             }
 

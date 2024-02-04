@@ -8,19 +8,6 @@
     android:screenOrientation="portrait"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/circularProgressBar"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/block_default" />
-
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/circularProgressBar"
         android:layout_width="300dp"
@@ -36,35 +23,64 @@
         app:cpb_round_border="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/hintTextTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="@string/main_act_text"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/circularProgressBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.417" />
 
     <TextView
         android:id="@+id/timeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="60dp"
         android:fontFamily="@font/nunito_semibold"
         android:text="00 : 00"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
         app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/circularProgressBar" />
+
+    <TextView
+        android:id="@+id/inspireTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Concentration on work -\n is the key to success!"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circularProgressBar" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
+        app:layout_constraintTop_toTopOf="@+id/circularProgressBar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/block_default" />
+
+    <TextView
+        android:id="@+id/hintTextTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="@string/main_act_text"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/circularProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/settingsButtonImg"
@@ -112,21 +128,6 @@
         app:layout_constraintTop_toBottomOf="@+id/collectionBtnIV" />
 
     <TextView
-        android:id="@+id/inspireTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="Concentration on work -\n is the key to success!"
-        android:textAlignment="center"
-        android:textColor="@color/textColor"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circularProgressBar" />
-
-    <TextView
         android:id="@+id/coinsCountTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -158,5 +159,27 @@
         app:layout_constraintEnd_toStartOf="@+id/coinsCountTV"
         app:layout_constraintTop_toTopOf="@+id/coinsCountTV"
         app:srcCompat="@drawable/blockcoin_icon" />
+
+    <ImageView
+        android:id="@+id/shopBtnIV"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/settings_button_background"
+        app:layout_constraintStart_toEndOf="@+id/collectionBtnIV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/shop_icon" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Shop"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="@+id/shopBtnIV"
+        app:layout_constraintStart_toStartOf="@+id/shopBtnIV"
+        tools:layout_editor_absoluteY="65dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
