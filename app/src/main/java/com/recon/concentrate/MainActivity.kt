@@ -1,19 +1,15 @@
 package com.recon.concentrate
 
 import SharedPreferencesManager
-import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.app.NotificationManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -56,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
 
         val notificationManager =
