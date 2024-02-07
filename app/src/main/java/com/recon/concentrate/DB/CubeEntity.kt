@@ -7,17 +7,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "cubes")
 data class CubeEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    //val id: Long = 0L,
 
     @ColumnInfo(name = "name")
     val name: String,
 
     @ColumnInfo(name = "is_open")
     var isOpen: Boolean = false,
-//
-//    @ColumnInfo(name = "rarity")
-//    var rarity: Int,
-//
-//    @ColumnInfo(name = "date_when_opened")
-//    var openDate: String
+
+    @ColumnInfo(name = "rarity")
+    var rarity: String,
+
 )
