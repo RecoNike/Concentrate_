@@ -18,4 +18,9 @@ interface CubeDao {
     @Update
     suspend fun updateCube(cube: CubeEntity)
 
+    @Query("SELECT * FROM cubes WHERE rarity = :rarity")
+    suspend fun getCubesByRarity(rarity: String): List<CubeEntity>
+
+    @Query("SELECT * FROM cubes WHERE name = :name")
+    suspend fun getCubeByName(name: String): CubeEntity?
 }
