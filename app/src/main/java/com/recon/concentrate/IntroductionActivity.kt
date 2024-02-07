@@ -7,7 +7,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.recon.concentrate.DB.AppDatabase
+import com.recon.concentrate.DB.CubeEntity
 import com.recon.concentrate.intro_fragments.IntroViewPagerAdapter
+import com.recon.concentrate.utils.InitCubesDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class IntroductionActivity : FragmentActivity() {
     private val sharedPreferencesManager by lazy { SharedPreferencesManager(this) }
@@ -17,11 +23,19 @@ class IntroductionActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_introduction)
 
+
+        val cubeDao = AppDatabase.getInstance(this).cubeDao()
+        val initCubesDB = InitCubesDB(cubeDao)
+
+
         viewPager = findViewById(R.id.pager)
         val adapter = IntroViewPagerAdapter(this)
         viewPager.adapter = adapter
         startButton = findViewById(R.id.startBtTv)
 
+        CoroutineScope(Dispatchers.Main).launch {
+            initCubesDB.initializeCubes()
+        }
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 // При смене страницы, проверяем её номер и изменяем видимость кнопки
