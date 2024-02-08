@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cubes")
 data class CubeEntity(
-    @PrimaryKey(autoGenerate = true)
-    //val id: Long = 0L,
+    @PrimaryKey//(autoGenerate = true)
+//    @ColumnInfo(name = "id")
+//    val id: Long = 0L,
 
     @ColumnInfo(name = "name")
     val name: String,
