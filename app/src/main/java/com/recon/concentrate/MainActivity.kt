@@ -20,6 +20,9 @@ import com.recon.concentrate.DB.AppDatabase
 import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.utils.DialogHelper
 import com.recon.concentrate.utils.TimerNotificationManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
@@ -53,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val database = AppDatabase.getInstance(applicationContext)
@@ -68,7 +70,27 @@ class MainActivity : AppCompatActivity() {
         coinsCountTV = findViewById(R.id.coinsCountTV)
         checkSavedOptions()
 
-        if (!notificationManager.areNotificationsEnabled()) {
+
+        //DEBUG
+        sharedPreferencesManager.writeString("coins", "1000")
+        CoroutineScope(Dispatchers.Main).launch {
+            // Получаем все кубы из базы данных
+            val allCubes = cubeDao.getAllCubes()
+
+            // Выводим содержимое всех кубов в консоль
+            allCubes.forEach { cube ->
+                Log.d(
+                    "ShopActivity", "Cube: ${cube.name}, " +
+                            "Rarity: ${cube.rarity}, " +
+                            "IsOpen: ${cube.isOpen}"
+                )
+            }
+        }
+            //DEBUG
+
+
+
+            if (!notificationManager.areNotificationsEnabled()) {
             // Уведомления выключены, отправляем запрос на включение
             showNotificationAlertDialog()
         }
