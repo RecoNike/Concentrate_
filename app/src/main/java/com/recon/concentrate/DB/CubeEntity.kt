@@ -18,4 +18,4 @@ data class CubeEntity(
     @ColumnInfo(name = "rarity")
     var rarity: String,
 
-)
+    )

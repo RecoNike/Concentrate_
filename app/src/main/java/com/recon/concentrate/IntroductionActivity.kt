@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class IntroductionActivity : FragmentActivity() {
     private val sharedPreferencesManager by lazy { SharedPreferencesManager(this) }
     lateinit var viewPager: ViewPager2
-    lateinit var startButton : TextView
+    lateinit var startButton: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_introduction)

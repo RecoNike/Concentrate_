@@ -27,8 +27,8 @@ class ShopActivity : AppCompatActivity() {
         coinsCountTV = findViewById(R.id.coinsCountTV)
         InitMoney()
 
-        chestBtn.setOnClickListener{
-            if(sharedPreferencesManager.readString("coins","").toInt() >= 10){
+        chestBtn.setOnClickListener {
+            if (sharedPreferencesManager.readString("coins", "").toInt() >= 10) {
                 OpenChest()
             } else {
                 Snackbar.make(
@@ -39,7 +39,7 @@ class ShopActivity : AppCompatActivity() {
             }
         }
 
-        backBt.setOnClickListener{
+        backBt.setOnClickListener {
             val i: Intent = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад

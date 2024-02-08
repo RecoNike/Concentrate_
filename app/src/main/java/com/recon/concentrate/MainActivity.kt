@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val database = AppDatabase.getInstance(applicationContext)
@@ -289,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                 shopMainBtn.alpha = 1.0f
                 timerNotificationManager.cancelTimerNotification()
                 if (!forceStopped) {
-                    Log.d("","Not forceStopped, adding 10 coins")
+                    Log.d("", "Not forceStopped, adding 10 coins")
                     val coins: Int =
                         savedDuration.toInt() + sharedPreferencesManager.readString("coins", "5")
                             .toInt()
