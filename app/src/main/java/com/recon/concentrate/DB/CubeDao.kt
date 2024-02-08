@@ -23,4 +23,7 @@ interface CubeDao {
 
     @Query("SELECT * FROM cubes WHERE name = :name")
     suspend fun getCubeByName(name: String): CubeEntity?
+
+    @Query("UPDATE cubes SET is_open = :isOpen WHERE name = :name")
+    suspend fun updateCubeIsOpen(name: String, isOpen: Boolean)
 }
