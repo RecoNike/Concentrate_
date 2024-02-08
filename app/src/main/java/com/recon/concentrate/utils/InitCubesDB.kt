@@ -3,35 +3,42 @@ package com.recon.concentrate.utils
 import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.DB.CubeEntity
 
-class InitCubesDB (private val cubeDao: CubeDao){
-    suspend fun initializeCubes(){
+//
+// Run Once
+//
+
+class InitCubesDB(private val cubeDao: CubeDao) {
+    suspend fun initializeCubes() {
         val cubes = listOf(
             CubeEntity("Basic", false, "Common"),
             CubeEntity("Softy", false, "Common"),
             CubeEntity("Eye", false, "Common"),
             CubeEntity("Jelly", false, "Common"),
             CubeEntity("Sapphire", false, "Common"),
-            CubeEntity("Basic", false, "Common"),
-            CubeEntity("Basic", false, "Common"),
+            CubeEntity("Dirt", false, "Common"),
+            CubeEntity("Scratched", false, "Common"),
 
-            CubeEntity("Basic", false, "Rare"),
-            CubeEntity("Basic", false, "Rare"),
-            CubeEntity("Basic", false, "Rare"),
-            CubeEntity("Basic", false, "Rare"),
-            CubeEntity("Basic", false, "Rare"),
-            CubeEntity("Basic", false, "Rare"),
 
-            CubeEntity("Basic", false, "Epic"),
-            CubeEntity("Basic", false, "Epic"),
-            CubeEntity("Basic", false, "Epic"),
-            CubeEntity("Basic", false, "Epic"),
+            CubeEntity("Cactus", false, "Rare"),
+            CubeEntity("Coffee Cup", false, "Rare"),
+            CubeEntity("Iron", false, "Rare"),
+            CubeEntity("Water Glass", false, "Rare"),
+            CubeEntity("Dissolved", false, "Rare"),
+            CubeEntity("Apple", false, "Rare"),
 
-            CubeEntity("Basic", false, "Legendary"),
-            CubeEntity("Basic", false, "Legendary"),
-            CubeEntity("Basic", false, "Legendary")
+
+            CubeEntity("Magma", false, "Epic"),
+            CubeEntity("Rock", false, "Epic"),
+            CubeEntity("Ice-Cream", false, "Epic"),
+            CubeEntity("Neon", false, "Epic"),
+
+
+            CubeEntity("Elf`s Stone", false, "Legendary"),
+            CubeEntity("Mechanical", false, "Legendary"),
+            CubeEntity("Sci-Fi", false, "Legendary")
         )
 
-        cubes.forEach{ cube->
+        cubes.forEach { cube ->
             cubeDao.insertCube(cube)
         }
     }
