@@ -24,6 +24,25 @@ class CubeAdapter(private val cubes: List<CubeEntity>) :
         "Jelly" to R.drawable.block_jelly,
         "Sapphire" to R.drawable.block_saphire,
         "Eye" to R.drawable.block_eye,
+        "Dirt" to R.drawable.block_dirty,
+        "Scratched" to R.drawable.block_scratched,
+
+        "Cactus" to R.drawable.block_cactus,
+        "Coffee Cup" to R.drawable.block_coffee_cup,
+        "Iron" to R.drawable.block_iron,
+        "Water Glass" to R.drawable.block_water_glass,
+        "Dissolved" to R.drawable.block_dissolved,
+        "Apple" to R.drawable.block_apple,
+
+        "Magma" to R.drawable.block_magma,
+        "Crystal" to R.drawable.block_crystal,
+        "Ice-Cream" to R.drawable.block_ice_creampng,
+        "Neon" to R.drawable.block_neon,
+
+        "Elf`s Stone" to R.drawable.block_elf_stone,
+//        "Mechanical" to R.drawable.block_eye,
+        "Sci-Fi" to R.drawable.block_sci_fi,
+
         // Добавьте другие кубы и их изображения
     )
     // ViewHolder для элемента списка
