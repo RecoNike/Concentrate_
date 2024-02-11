@@ -28,7 +28,7 @@ class InitCubesDB(private val cubeDao: CubeDao) {
 
 
             CubeEntity("Magma", false, "Epic"),
-            CubeEntity("Rock", false, "Epic"),
+            CubeEntity("Crystal", false, "Epic"),
             CubeEntity("Ice-Cream", false, "Epic"),
             CubeEntity("Neon", false, "Epic"),
 
