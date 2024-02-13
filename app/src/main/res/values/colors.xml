@@ -5,6 +5,15 @@
     <color name="bg_gradientEnd">#02315E</color>
     <color name = "textColor">#B8EAD4</color>
     <color name="lightTextColor">#80B8EAD4</color>
+    <color name = "progress">#0073D2</color>
+
+    <color name="bg_gradientStartG">#91C27D</color>
+    <color name="bg_gradientCenterG">#559364</color>
+    <color name="bg_gradientEndG">#255525</color>
+    <color name = "textColorG">#E7F0EF</color>
+    <color name="lightTextColorG">#80E7F0EF</color>
+    <color name = "progressG">#11250A</color>
+
 
 
     <color name="black">#FF000000</color>

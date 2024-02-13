@@ -3,7 +3,29 @@
     <style name="Base.Theme.Concentrate" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/bg_gradientStart</item>
+        <item name="colorPrimaryDark">@color/bg_gradientCenter</item>
+        <item name="colorAccent">@color/bg_gradientEnd</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:textColorSecondary">@color/lightTextColor</item>
+        <item name="colorOutline">@color/textColor</item>
+
+        <item name="cpb_background_progressbar_color">@color/progress</item>
+
         <item name="android:statusBarColor">@color/bg_gradientEnd</item>
+    </style>
+
+    <style name="GreenTheme" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/bg_gradientStartG</item>
+        <item name="colorPrimaryDark">@color/bg_gradientCenterG</item>
+        <item name="colorAccent">@color/bg_gradientEndG</item>
+        <item name="android:textColorPrimary">@color/textColorG</item>
+        <item name="android:textColorSecondary">@color/lightTextColorG</item>
+
+        <item name="cpb_background_progressbar_color">@color/progressG</item>
+
+        <item name="android:statusBarColor">@color/bg_gradientEndG</item>
     </style>
 
     <style name="Theme.Concentrate" parent="Base.Theme.Concentrate" />

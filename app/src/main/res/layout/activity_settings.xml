@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".15"
                 android:fontFamily="@font/nunito_semibold"
-                android:text="Change\nBrightness"
+                android:text="Vibration"
                 android:textAlignment="center"
                 android:textColor="@color/textColor" />
 
@@ -113,6 +113,33 @@
                 android:textOn="Enable"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/list_item_bg"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Theme"
+                android:textAlignment="center"
+                android:textColor="@color/textColor" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>

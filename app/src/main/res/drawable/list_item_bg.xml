@@ -2,8 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="10dp"/>
     <gradient
-        android:startColor="@color/bg_gradientEnd"
-        android:endColor="@color/bg_gradientCenter"
+        android:startColor="?attr/colorAccent"
+        android:endColor="?attr/colorPrimaryDark"
         android:gradientRadius="300dp"
         android:angle="90"
         android:type="linear"/>

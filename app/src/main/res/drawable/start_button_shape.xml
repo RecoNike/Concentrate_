@@ -2,15 +2,15 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <gradient
-        android:startColor="@color/bg_gradientStart"
-        android:endColor="@color/bg_gradientEnd"
+        android:startColor="?attr/colorPrimary"
+        android:endColor="?attr/colorAccent"
         android:gradientRadius="300dp"
 
         android:type="radial"/>
     <corners
         android:radius="8dp"/>
     <stroke
-        android:color="@color/textColor"
+        android:color="?attr/colorOutline"
         android:width="3dp"
         />
 
