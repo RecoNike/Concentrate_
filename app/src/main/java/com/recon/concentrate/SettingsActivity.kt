@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.Spinner
-import android.widget.Switch
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.google.android.material.snackbar.Snackbar
@@ -21,13 +20,11 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var backBt: ImageView
     lateinit var seekBar: SeekBar
     lateinit var optionTimeTV: TextView
-    lateinit var brightSwitch:ToggleButton
+    lateinit var vibrightSwitch:ToggleButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var theme = sharedPreferencesManager.readString("theme", "Basic")
-        val i = Intent(this, SettingsActivity::class.java)
-        when(theme){
+        when(sharedPreferencesManager.readString("theme", "Basic")){
             "Basic" -> {
                 setTheme(R.style.Base_Theme_Concentrate)
             }
@@ -41,21 +38,21 @@ class SettingsActivity : AppCompatActivity() {
         optionTimeTV = findViewById(R.id.timeValueText)
         seekBar = findViewById(R.id.seekBar)
         backBt = findViewById(R.id.backButton)
-        brightSwitch = findViewById(R.id.brightnessBtn)
+        vibrightSwitch = findViewById(R.id.brightnessBtn)
 
         CheckShared()
 
         backBt.setOnClickListener{
-            val i: Intent = Intent(this, MainActivity::class.java)
+            val i = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         }
 
-        brightSwitch.setOnClickListener {
-            sharedPreferencesManager.writeString("changeBright",brightSwitch.isChecked().toString())
+        vibrightSwitch.setOnClickListener {
+            sharedPreferencesManager.writeString("vibration",vibrightSwitch.isChecked().toString())
 
             //Debug
-            if(brightSwitch.isChecked()){
+            if(vibrightSwitch.isChecked()){
                 Log.d("","ON")
             } else {
                 Log.d("","OFF")
@@ -94,6 +91,12 @@ class SettingsActivity : AppCompatActivity() {
 
         // Устанавливаем адаптер для Spinner
         spinner.adapter = adapter
+        if (sharedPreferencesManager.readString("theme","Basic") == "Basic"){
+            spinner.setSelection(0)
+        } else {
+            spinner.setSelection(1)
+        }
+
 
         // Устанавливаем обработчик событий для выбора элемента в Spinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -102,7 +105,6 @@ class SettingsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (initialized) {
                     // Обработка выбора элемента
-                    val selectedItem = data[position]
                     when (position) {
                         0 -> {
                             sharedPreferencesManager.writeString("theme", "Basic")
@@ -110,7 +112,7 @@ class SettingsActivity : AppCompatActivity() {
                                 spinner,
                                 "Press the back button",
                                 Snackbar.LENGTH_SHORT
-                            )/*.setAnchorView(optionTimeTV)*/
+                            )
                                 .show()
                         }
                         1 -> {
@@ -142,10 +144,11 @@ class SettingsActivity : AppCompatActivity() {
             seekBar.progress = sharedPreferencesManager.readString("workTime","5").toInt()
             optionTimeTV.text = ((seekBar.progress + 1) * 5).toString() + " minutes"
         }
-        if(sharedPreferencesManager.containsKey("changeBright")){
-            brightSwitch.setChecked(sharedPreferencesManager.readString("changeBright","true").toBoolean())
+        if(sharedPreferencesManager.containsKey("vibration")){
+            vibrightSwitch.setChecked(sharedPreferencesManager.readString("vibration","true").toBoolean())
         }
     }
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         val i: Intent = Intent(this, MainActivity::class.java)
@@ -154,9 +157,4 @@ class SettingsActivity : AppCompatActivity() {
         return
     }
 
-    fun recreateAct(){
-        val i: Intent = Intent(this, SettingsActivity::class.java)
-        startActivity(i)
-        finish()
-    }
 }

@@ -51,6 +51,7 @@ class IntroductionActivity : FragmentActivity() {
             sharedPreferencesManager.writeString("changeBright", "true")
             sharedPreferencesManager.writeString("coins", "5")
             sharedPreferencesManager.writeString("theme", "Basic")
+            sharedPreferencesManager.writeString("vibration","true")
             val i = Intent(this, MainActivity::class.java)
             finish()
             startActivity(i)

@@ -20,6 +20,7 @@ import com.recon.concentrate.DB.AppDatabase
 import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.utils.DialogHelper
 import com.recon.concentrate.utils.TimerNotificationManager
+import com.recon.concentrate.utils.VibrationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,10 +52,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var dialogHelper: DialogHelper
     var forceStopped = false
     lateinit var inspireTV: TextView
+    lateinit var vibrationHelper:VibrationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var theme = sharedPreferencesManager.readString("theme", "Basic")
+        val theme = sharedPreferencesManager.readString("theme", "Basic")
         when(theme){
             "Basic" -> {
                 setTheme(R.style.Base_Theme_Concentrate)
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_main)
 
+        vibrationHelper = VibrationHelper(this)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val database = AppDatabase.getInstance(applicationContext)
@@ -134,21 +137,26 @@ class MainActivity : AppCompatActivity() {
         initProgressBar()
 
         collectionBtn.setOnClickListener {
+            Vibrate()
             StartCollection()
         }
         settingsbtn.setOnClickListener {
+            Vibrate()
             StartSettings()
         }
         shopMainBtn.setOnClickListener {
+            Vibrate()
             StartShop()
         }
         openShopBtn.setOnClickListener {
+            Vibrate()
             StartShop()
         }
 
 
         // Устанавливаем слушатель клика для запуска обратного отсчета
         circularProgressBar.setOnClickListener {
+            Vibrate()
             if (!countdownStarted) {
                 settingsbtn.alpha = 0.5f
                 collectionBtn.alpha = 0.5f
@@ -177,20 +185,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 )
             }
-//            val layoutParams = window.attributes
-//            if((screenBright).toFloat() <= 0.01F){
-//                layoutParams.screenBrightness = 0.01F // Пример: 10% яркости
-//                window.attributes = layoutParams
-//            } else {
-//                layoutParams.screenBrightness = 0.05F
-//                window.attributes = layoutParams
-//            }
+        }
+    }
+
+    private fun Vibrate() {
+        if(sharedPreferencesManager.readString("vibration","true").toBoolean() == true){
+            vibrationHelper.vibrateShort()
         }
     }
 
     private fun checkSavedOptions() {
         if (!(sharedPreferencesManager.containsKey("workTime"))) {
-            val i: Intent = Intent(this, IntroductionActivity::class.java)
+            val i = Intent(this, IntroductionActivity::class.java)
             startActivity(i)
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         } else {
@@ -210,7 +216,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun StartSettings() {
         if (!countdownStarted) {
-            val i: Intent = Intent(this, SettingsActivity::class.java)
+            val i = Intent(this, SettingsActivity::class.java)
             startActivity(i)
             finish()
             return
@@ -226,7 +232,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun StartCollection() {
         if (!countdownStarted) {
-            val i: Intent = Intent(this, CollectionActivity::class.java)
+            val i = Intent(this, CollectionActivity::class.java)
             startActivity(i)
             finish()
             return
@@ -242,7 +248,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun StartShop() {
         if (!countdownStarted) {
-            val i: Intent = Intent(this, ShopActivity::class.java)
+            val i = Intent(this, ShopActivity::class.java)
             startActivity(i)
             finish()
             return
@@ -299,13 +305,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
-                if (keyguardManager.isKeyguardLocked) {
-                    // Экран заблокирован, принимайте соответствующие действия
-                    ScreenLocked = true
-                } else {
-                    ScreenLocked = false
-                    // Экран разблокирован или находится в процессе разблокировки
-                }
+                ScreenLocked = keyguardManager.isKeyguardLocked
             }
 
             override fun onFinish() {
@@ -355,6 +355,7 @@ class MainActivity : AppCompatActivity() {
         )
         return texts[Random.nextInt(texts.size)]
     }
+
 
 
     private fun requestNotificationPermission() {
