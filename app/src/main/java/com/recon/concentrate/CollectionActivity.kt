@@ -1,5 +1,6 @@
 package com.recon.concentrate
 
+import SharedPreferencesManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,12 +14,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CollectionActivity : AppCompatActivity() {
-
+    private val sharedPreferencesManager by lazy { SharedPreferencesManager(this) }
     lateinit var backBt: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var theme = sharedPreferencesManager.readString("theme", "Basic")
+        val i = Intent(this, SettingsActivity::class.java)
+        when(theme){
+            "Basic" -> {
+                setTheme(R.style.Base_Theme_Concentrate)
+            }
+            "Green" -> {
+                setTheme(R.style.GreenTheme)
+            }
+        }
         setContentView(R.layout.activity_collection)
         backBt = findViewById(R.id.backButton)
         CoroutineScope(Dispatchers.Main).launch {

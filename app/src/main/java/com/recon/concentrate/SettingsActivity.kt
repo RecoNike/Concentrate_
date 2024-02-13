@@ -5,8 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -20,6 +24,18 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var brightSwitch:ToggleButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var theme = sharedPreferencesManager.readString("theme", "Basic")
+        val i = Intent(this, SettingsActivity::class.java)
+        when(theme){
+            "Basic" -> {
+                setTheme(R.style.Base_Theme_Concentrate)
+            }
+            "Green" -> {
+                setTheme(R.style.GreenTheme)
+            }
+        }
+
         setContentView(R.layout.activity_settings)
 
         optionTimeTV = findViewById(R.id.timeValueText)
@@ -64,6 +80,61 @@ class SettingsActivity : AppCompatActivity() {
             }
         })
 
+
+        val spinner: Spinner = findViewById(R.id.spinner)
+
+        // Создаем массив данных для Spinner
+        val data = listOf("Basic", "Green")
+
+        // Создаем адаптер для Spinner с использованием массива данных
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, data)
+
+        // Устанавливаем стиль выпадающего списка
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Устанавливаем адаптер для Spinner
+        spinner.adapter = adapter
+
+        // Устанавливаем обработчик событий для выбора элемента в Spinner
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            var initialized = false // Флаг для отслеживания инициализации
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (initialized) {
+                    // Обработка выбора элемента
+                    val selectedItem = data[position]
+                    when (position) {
+                        0 -> {
+                            sharedPreferencesManager.writeString("theme", "Basic")
+                            Snackbar.make(
+                                spinner,
+                                "Press the back button",
+                                Snackbar.LENGTH_SHORT
+                            )/*.setAnchorView(optionTimeTV)*/
+                                .show()
+                        }
+                        1 -> {
+                            sharedPreferencesManager.writeString("theme", "Green")
+                            Snackbar.make(
+                                spinner,
+                                "Press the back button",
+                                Snackbar.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                } else {
+                    initialized = true // Устанавливаем флаг в true после первого вызова
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Обработка события, когда ничего не выбрано
+            }
+        }
+
+
+
     }
 
     private fun CheckShared() {
@@ -81,5 +152,11 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(i)
         finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         return
+    }
+
+    fun recreateAct(){
+        val i: Intent = Intent(this, SettingsActivity::class.java)
+        startActivity(i)
+        finish()
     }
 }

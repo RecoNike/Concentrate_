@@ -32,6 +32,16 @@ class ShopActivity : AppCompatActivity() {
     private lateinit var chestOpener: ChestOpener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var theme = sharedPreferencesManager.readString("theme", "Basic")
+        val i = Intent(this, SettingsActivity::class.java)
+        when(theme){
+            "Basic" -> {
+                setTheme(R.style.Base_Theme_Concentrate)
+            }
+            "Green" -> {
+                setTheme(R.style.GreenTheme)
+            }
+        }
         setContentView(R.layout.activity_shop)
         val database = AppDatabase.getInstance(this)
         cubeDao = database.cubeDao()

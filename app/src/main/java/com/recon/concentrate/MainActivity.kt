@@ -54,6 +54,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var theme = sharedPreferencesManager.readString("theme", "Basic")
+        when(theme){
+            "Basic" -> {
+                setTheme(R.style.Base_Theme_Concentrate)
+            }
+            "Green" -> {
+                setTheme(R.style.GreenTheme)
+            }
+        }
         setContentView(R.layout.activity_main)
 
         val notificationManager =
