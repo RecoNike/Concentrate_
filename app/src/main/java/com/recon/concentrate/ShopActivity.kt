@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.recon.concentrate.DB.AppDatabase
 import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.utils.ChestOpener
+import com.recon.concentrate.utils.CustomDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -85,8 +86,16 @@ class ShopActivity : AppCompatActivity() {
         chestOpener = ChestOpener(1.0f, cubeDao)
         CoroutineScope(Dispatchers.Main).launch {
             val randomCube = chestOpener.OpenChest()
+            val cubeName = randomCube?.name ?: "Unknown"
+            val cubeRarity = randomCube?.rarity ?: "Unknown"
+
+            val dialog = CustomDialogFragment.newInstance(cubeName, cubeRarity)
+            dialog.show(supportFragmentManager, "CustomDialogFragment")
+
             Log.d("",randomCube.toString())
         }
+//        val dialog = CustomDialogFragment()
+//        dialog.show(supportFragmentManager, "CustomDialogFragment")
         val buffer = sharedPreferencesManager.readString("coins", "")
         sharedPreferencesManager.writeString("coins", (buffer.toInt() - 10).toString())
         InitMoney()
