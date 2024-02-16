@@ -1,5 +1,6 @@
 package com.recon.concentrate.utils
 
+import SharedPreferencesManager
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
@@ -44,8 +45,12 @@ class CubeAdapter(private val cubes: List<CubeEntity>) :
 
         // Добавьте другие кубы и их изображения
     )
+    lateinit var vibrationHelper: VibrationHelper
+
     // ViewHolder для элемента списка
     class CubeViewHolder(itemView: View, private val cubes: List<CubeEntity>) : RecyclerView.ViewHolder(itemView) {
+
+
         val nameTextView: TextView = itemView.findViewById(R.id.nameTV)
         val rarityTextView: TextView = itemView.findViewById(R.id.rarityTV)
         val imageView: ImageView = itemView.findViewById(R.id.cardImage)
@@ -104,8 +109,5 @@ class CubeAdapter(private val cubes: List<CubeEntity>) :
         }
     }
 
-
-
-    // Возвращает общее количество элементов в списке
     override fun getItemCount() = cubes.size
 }
