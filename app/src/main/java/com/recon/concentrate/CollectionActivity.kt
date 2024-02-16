@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.recon.concentrate.DB.AppDatabase
 import com.recon.concentrate.utils.CubeAdapter
+import com.recon.concentrate.utils.VibrationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,11 +17,12 @@ import kotlinx.coroutines.launch
 class CollectionActivity : AppCompatActivity() {
     private val sharedPreferencesManager by lazy { SharedPreferencesManager(this) }
     lateinit var backBt: ImageView
-
+    lateinit var vibrationHelper: VibrationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var theme = sharedPreferencesManager.readString("theme", "Basic")
+        vibrationHelper = VibrationHelper(this)
         val i = Intent(this, SettingsActivity::class.java)
         when(theme){
             "Basic" -> {
@@ -37,6 +39,7 @@ class CollectionActivity : AppCompatActivity() {
         }
 
         backBt.setOnClickListener {
+            Vibrate()
             val i: Intent = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
@@ -57,5 +60,10 @@ class CollectionActivity : AppCompatActivity() {
         startActivity(i)
         finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         return
+    }
+    private fun Vibrate() {
+        if(sharedPreferencesManager.readString("vibration","true").toBoolean() == true){
+            vibrationHelper.vibrateShort()
+        }
     }
 }
