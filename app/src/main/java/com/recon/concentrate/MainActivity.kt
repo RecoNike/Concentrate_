@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     var forceStopped = false
     lateinit var inspireTV: TextView
     lateinit var vibrationHelper:VibrationHelper
+    var coefficient: Float = 0.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,39 +86,13 @@ class MainActivity : AppCompatActivity() {
 
         //DEBUG
         sharedPreferencesManager.writeString("coins", "1000")
-        CoroutineScope(Dispatchers.Main).launch {
-            // Получаем все кубы из базы данных
-            val allCubes = cubeDao.getAllCubes()
-
-            // Выводим содержимое всех кубов в консоль
-            allCubes.forEach { cube ->
-                Log.d(
-                    "ShopActivity", "Cube: ${cube.name}, " +
-                            "Rarity: ${cube.rarity}, " +
-                            "IsOpen: ${cube.isOpen}"
-                )
-            }
-        }
             //DEBUG
 
 
 
             if (!notificationManager.areNotificationsEnabled()) {
-            // Уведомления выключены, отправляем запрос на включение
             showNotificationAlertDialog()
         }
-
-        try {
-            screenBright = Settings.System.getInt(
-                contentResolver,
-                Settings.System.SCREEN_BRIGHTNESS
-            )
-            Log.i("Screen", "Текущая яркость экрана: $screenBright")
-        } catch (e: Settings.SettingNotFoundException) {
-            e.printStackTrace()
-        }
-
-
 
 
         timerTextView = findViewById(R.id.timeTV)
@@ -126,10 +101,10 @@ class MainActivity : AppCompatActivity() {
         val scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.ring_anim_in_start)
 
 
-        // Загружаем сохраненное значение времени из SharedPreferences
+
         timerTextView.text = "${(savedDuration * 5).toInt()} : 00"
 
-        // Рассчитываем начальный процент прогресса и устанавливаем его в CircularProgressBar
+
         val startInMin = savedDuration * 5
         startPercent = (startInMin / 60) * 100
 
@@ -154,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        // Устанавливаем слушатель клика для запуска обратного отсчета
+
         circularProgressBar.setOnClickListener {
             Vibrate()
             if (!countdownStarted) {
@@ -198,10 +173,11 @@ class MainActivity : AppCompatActivity() {
         if (!(sharedPreferencesManager.containsKey("workTime"))) {
             val i = Intent(this, IntroductionActivity::class.java)
             startActivity(i)
-            finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
+            finish()
         } else {
             savedDuration = sharedPreferencesManager.readString("workTime", "10").toFloat() + 1
             coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
+            coefficient = sharedPreferencesManager.readString("coefficient","1.0f").toFloat()
         }
     }
 
@@ -241,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                 circularProgressBar,
                 "Closed till countdown is working",
                 Snackbar.LENGTH_SHORT
-            )/*.setAnchorView(optionTimeTV)*/
+            )
                 .show()
         }
     }
@@ -257,7 +233,7 @@ class MainActivity : AppCompatActivity() {
                 circularProgressBar,
                 "Closed till countdown is working",
                 Snackbar.LENGTH_SHORT
-            )/*.setAnchorView(optionTimeTV)*/
+            )
                 .show()
         }
     }
@@ -266,13 +242,11 @@ class MainActivity : AppCompatActivity() {
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 
-        // Создаём CountDownTimer с учетом сохраненной длительности
-        //debug TODO DELETE AFTER  (savedDuration).toLong() * 5 * 60 * 1000
         countDownTimer = object : CountDownTimer((savedDuration).toLong() * 5 * 60 * 1000, 1000) {
             var savedMilisForAnim: Long = (savedDuration).toLong() * 5 * 60 * 1000
 
             override fun onTick(millisUntilFinished: Long) {
-                // Рассчитываем процент прогресса и обновляем CircularProgressBar
+
 
                 minsToEnd = (millisUntilFinished.toFloat() / 60000)
                 endPercent = (minsToEnd / 60) * 100
@@ -283,7 +257,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 runOnUiThread {
-                    //Обновляем UI
+
                     val minutes = (millisUntilFinished / 1000) / 60
                     val seconds = (millisUntilFinished / 1000) % 60
                     timerTextView.text = String.format("%02d : %02d", minutes, seconds)
@@ -309,7 +283,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                // Завершение обратного отсчета
+
                 countdownStarted = false
                 hintTV.visibility = View.VISIBLE
                 initProgressBar()
@@ -324,13 +298,15 @@ class MainActivity : AppCompatActivity() {
                         savedDuration.toInt() + sharedPreferencesManager.readString("coins", "5")
                             .toInt()
                     sharedPreferencesManager.writeString("coins", coins.toString())
+                    coefficient += (0.001f * savedDuration)
+                    sharedPreferencesManager.writeString("coefficient",coefficient.toString())
                 }
                 coinsCountTV.text = sharedPreferencesManager.readString("coins", "")
                 forceStopped = false
             }
 
         }
-        countDownTimer.start() // Запускаем таймер
+        countDownTimer.start()
     }
 
     private fun showNotificationAlertDialog() {
@@ -356,36 +332,10 @@ class MainActivity : AppCompatActivity() {
         return texts[Random.nextInt(texts.size)]
     }
 
-
-
     private fun requestNotificationPermission() {
         val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
         startActivity(intent)
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("Lifecycle", "Lifecycle is - onPause()")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("Lifecycle", "Lifecycle is - onRestart()")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (ScreenLocked) {
-            Log.d("Lifecycle", "Screen was locked, OK")
-        } else {
-            Log.d("Lifecycle", "The app was out")
-        }
-        Log.d("Lifecycle", "Lifecycle is - onResume()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("Lifecycle", "Lifecycle is - onStop()")
-    }
 }

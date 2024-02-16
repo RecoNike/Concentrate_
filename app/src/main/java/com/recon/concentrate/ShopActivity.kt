@@ -17,6 +17,7 @@ import com.recon.concentrate.utils.CustomDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class ShopActivity : AppCompatActivity() {
 
@@ -31,10 +32,12 @@ class ShopActivity : AppCompatActivity() {
 
     private lateinit var cubeDao: CubeDao
     private lateinit var chestOpener: ChestOpener
+    var coefficient: Float = 0.0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var theme = sharedPreferencesManager.readString("theme", "Basic")
         val i = Intent(this, SettingsActivity::class.java)
+        coefficient = sharedPreferencesManager.readString("coefficient","1.0f").toFloat()
         when(theme){
             "Basic" -> {
                 setTheme(R.style.Base_Theme_Concentrate)
@@ -83,7 +86,7 @@ class ShopActivity : AppCompatActivity() {
             "Chest Opened",
             Snackbar.LENGTH_SHORT
         ).show()
-        chestOpener = ChestOpener(1.0f, cubeDao)
+        chestOpener = ChestOpener(coefficient, cubeDao)
         CoroutineScope(Dispatchers.Main).launch {
             val randomCube = chestOpener.OpenChest()
             val cubeName = randomCube?.name ?: "Unknown"
@@ -94,8 +97,7 @@ class ShopActivity : AppCompatActivity() {
 
             Log.d("",randomCube.toString())
         }
-//        val dialog = CustomDialogFragment()
-//        dialog.show(supportFragmentManager, "CustomDialogFragment")
+
         val buffer = sharedPreferencesManager.readString("coins", "")
         sharedPreferencesManager.writeString("coins", (buffer.toInt() - 10).toString())
         InitMoney()
