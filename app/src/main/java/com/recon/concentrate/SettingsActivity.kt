@@ -4,7 +4,6 @@ import SharedPreferencesManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -51,21 +50,12 @@ class SettingsActivity : AppCompatActivity() {
         vibrightSwitch.setOnClickListener {
             sharedPreferencesManager.writeString("vibration",vibrightSwitch.isChecked().toString())
 
-            //Debug
-            if(vibrightSwitch.isChecked()){
-                Log.d("","ON")
-            } else {
-                Log.d("","OFF")
-            }
-            //
-
         }
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Сохранение значения в SharedPreferences при изменении
                 sharedPreferencesManager.writeString("workTime", progress.toString())
                 optionTimeTV.text = "${(progress + 1) * 5} minutes"
-                Log.d("", "Progress : ${sharedPreferencesManager.readString("workTime","")}")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}

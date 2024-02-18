@@ -1,11 +1,9 @@
 package com.recon.concentrate
 
 import SharedPreferencesManager
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,7 +15,6 @@ import com.recon.concentrate.utils.CustomDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 class ShopActivity : AppCompatActivity() {
 
@@ -35,8 +32,7 @@ class ShopActivity : AppCompatActivity() {
     var coefficient: Float = 0.0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var theme = sharedPreferencesManager.readString("theme", "Basic")
-        val i = Intent(this, SettingsActivity::class.java)
+        val theme = sharedPreferencesManager.readString("theme", "Basic")
         coefficient = sharedPreferencesManager.readString("coefficient","1.0f").toFloat()
         when(theme){
             "Basic" -> {
@@ -69,7 +65,7 @@ class ShopActivity : AppCompatActivity() {
         }
 
         backBt.setOnClickListener {
-            val i: Intent = Intent(this, MainActivity::class.java)
+            val i = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         }
@@ -95,7 +91,6 @@ class ShopActivity : AppCompatActivity() {
             val dialog = CustomDialogFragment.newInstance(cubeName, cubeRarity)
             dialog.show(supportFragmentManager, "CustomDialogFragment")
 
-            Log.d("",randomCube.toString())
         }
 
         val buffer = sharedPreferencesManager.readString("coins", "")
@@ -106,7 +101,7 @@ class ShopActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val i: Intent = Intent(this, MainActivity::class.java)
+        val i = Intent(this, MainActivity::class.java)
         startActivity(i)
         finish() // Закрываем текущую активити, чтобы пользователь не мог вернуться назад
         return

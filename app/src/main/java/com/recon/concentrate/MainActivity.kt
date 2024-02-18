@@ -8,7 +8,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -21,9 +20,6 @@ import com.recon.concentrate.DB.CubeDao
 import com.recon.concentrate.utils.DialogHelper
 import com.recon.concentrate.utils.TimerNotificationManager
 import com.recon.concentrate.utils.VibrationHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
@@ -44,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     var ScreenLocked: Boolean = false
     var startPercent: Float = 0.0f
     var countdownStarted = false
-    var screenBright: Int = 0
     var savedDuration = 0f
     var endPercent = 0f
     var minsToEnd: Float = 0f
@@ -82,13 +77,6 @@ class MainActivity : AppCompatActivity() {
         shopMainBtn = findViewById(R.id.shopBtnIV)
         coinsCountTV = findViewById(R.id.coinsCountTV)
         checkSavedOptions()
-
-
-        //DEBUG
-        sharedPreferencesManager.writeString("coins", "1000")
-            //DEBUG
-
-
 
             if (!notificationManager.areNotificationsEnabled()) {
             showNotificationAlertDialog()
@@ -293,7 +281,6 @@ class MainActivity : AppCompatActivity() {
                 shopMainBtn.alpha = 1.0f
                 timerNotificationManager.cancelTimerNotification()
                 if (!forceStopped) {
-                    Log.d("", "Not forceStopped, adding 10 coins")
                     val coins: Int =
                         savedDuration.toInt() + sharedPreferencesManager.readString("coins", "5")
                             .toInt()
